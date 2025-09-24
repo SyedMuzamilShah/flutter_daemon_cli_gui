@@ -46,6 +46,15 @@ class RemoteTasksServiceClient extends $grpc.Client {
     return $createUnaryCall(_$fetchRemoteTaskById, request, options: options);
   }
 
+  $grpc.ResponseStream<$0.RemoteOwnTaskResponse> fetchFromOwnServer(
+    $0.RemoteEmpty request, {
+    $grpc.CallOptions? options,
+  }) {
+    return $createStreamingCall(
+        _$fetchFromOwnServer, $async.Stream.fromIterable([request]),
+        options: options);
+  }
+
   // method descriptors
 
   static final _$fetchRemoteTasks =
@@ -58,6 +67,11 @@ class RemoteTasksServiceClient extends $grpc.Client {
           '/mnm.RemoteTasksService/FetchRemoteTaskById',
           ($0.FetchTaskByIdRequest value) => value.writeToBuffer(),
           $0.RemoteTask.fromBuffer);
+  static final _$fetchFromOwnServer =
+      $grpc.ClientMethod<$0.RemoteEmpty, $0.RemoteOwnTaskResponse>(
+          '/mnm.RemoteTasksService/FetchFromOwnServer',
+          ($0.RemoteEmpty value) => value.writeToBuffer(),
+          $0.RemoteOwnTaskResponse.fromBuffer);
 }
 
 @$pb.GrpcServiceName('mnm.RemoteTasksService')
@@ -80,6 +94,13 @@ abstract class RemoteTasksServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.FetchTaskByIdRequest.fromBuffer(value),
         ($0.RemoteTask value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.RemoteEmpty, $0.RemoteOwnTaskResponse>(
+        'FetchFromOwnServer',
+        fetchFromOwnServer_Pre,
+        false,
+        true,
+        ($core.List<$core.int> value) => $0.RemoteEmpty.fromBuffer(value),
+        ($0.RemoteOwnTaskResponse value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.RemoteTasksResponse> fetchRemoteTasks_Pre(
@@ -97,4 +118,12 @@ abstract class RemoteTasksServiceBase extends $grpc.Service {
 
   $async.Future<$0.RemoteTask> fetchRemoteTaskById(
       $grpc.ServiceCall call, $0.FetchTaskByIdRequest request);
+
+  $async.Stream<$0.RemoteOwnTaskResponse> fetchFromOwnServer_Pre(
+      $grpc.ServiceCall $call, $async.Future<$0.RemoteEmpty> $request) async* {
+    yield* fetchFromOwnServer($call, await $request);
+  }
+
+  $async.Stream<$0.RemoteOwnTaskResponse> fetchFromOwnServer(
+      $grpc.ServiceCall call, $0.RemoteEmpty request);
 }

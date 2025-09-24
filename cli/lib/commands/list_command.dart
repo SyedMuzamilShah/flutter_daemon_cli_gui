@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:args/command_runner.dart';
 import 'package:mnm/cli_app.dart';
 import 'package:mnm/generated/todo.pbgrpc.dart';
@@ -23,6 +25,9 @@ class ListCommand extends Command {
         }
       }
     } finally {
+      ProcessSignal.sigint.watch().listen((a) async {
+        print("Testing ${a.name}");
+      });
       await cli.shutdown();
     }
   }

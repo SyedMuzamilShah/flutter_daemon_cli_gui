@@ -6,10 +6,17 @@ package mnm;
 service RemoteTasksService {
   rpc FetchRemoteTasks(RemoteEmpty) returns (RemoteTasksResponse);
   rpc FetchRemoteTaskById(FetchTaskByIdRequest) returns (RemoteTask);
+  rpc FetchFromOwnServer(RemoteEmpty) returns (stream RemoteOwnTaskResponse); 
 }
 
 
 message RemoteEmpty {}
+
+message RemoteOwnTaskResponse {
+  int32 id = 1;
+  string title = 2;
+  bool completed = 3;
+}
 
 
 message RemoteTask {

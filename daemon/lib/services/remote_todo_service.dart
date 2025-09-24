@@ -1,5 +1,6 @@
 import 'package:grpc/grpc.dart';
 import 'package:mnm/external/jsonplaceholder_api.dart';
+import 'package:mnm/external/own_server.dart';
 import 'package:mnm/generated/remote_todo.pbgrpc.dart';
 
 class RemoteTodoServiceImpl extends RemoteTasksServiceBase {
@@ -38,6 +39,27 @@ class RemoteTodoServiceImpl extends RemoteTasksServiceBase {
       return RemoteTasksResponse(tasks: tasks);
     } catch (e) {
       throw GrpcError.internal('Failed to fetch tasks');
+    }
+  }
+
+  @override
+  Stream<RemoteOwnTaskResponse> fetchFromOwnServer(
+      ServiceCall call, RemoteEmpty request) async* {
+    final ownServer = OwnServer();
+    try {
+      await for (var task in ownServer.client.fetchFromOwnServer(request)) {
+        yield RemoteOwnTaskResponse(
+          id: task.id,
+          title: task.title,
+          completed: task.completed,
+        );
+      }
+    } catch (e) {
+      print("Error fetching from own server: $e");
+      throw GrpcError.internal('Failed to fetch tasks from own server');
+    } finally {
+      await ownServer
+          .shutdown();
     }
   }
 }

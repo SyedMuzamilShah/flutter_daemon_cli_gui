@@ -23,6 +23,21 @@ const RemoteEmpty$json = {
 final $typed_data.Uint8List remoteEmptyDescriptor =
     $convert.base64Decode('CgtSZW1vdGVFbXB0eQ==');
 
+@$core.Deprecated('Use remoteOwnTaskResponseDescriptor instead')
+const RemoteOwnTaskResponse$json = {
+  '1': 'RemoteOwnTaskResponse',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 5, '10': 'id'},
+    {'1': 'title', '3': 2, '4': 1, '5': 9, '10': 'title'},
+    {'1': 'completed', '3': 3, '4': 1, '5': 8, '10': 'completed'},
+  ],
+};
+
+/// Descriptor for `RemoteOwnTaskResponse`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List remoteOwnTaskResponseDescriptor = $convert.base64Decode(
+    'ChVSZW1vdGVPd25UYXNrUmVzcG9uc2USDgoCaWQYASABKAVSAmlkEhQKBXRpdGxlGAIgASgJUg'
+    'V0aXRsZRIcCgljb21wbGV0ZWQYAyABKAhSCWNvbXBsZXRlZA==');
+
 @$core.Deprecated('Use remoteTaskDescriptor instead')
 const RemoteTask$json = {
   '1': 'RemoteTask',
