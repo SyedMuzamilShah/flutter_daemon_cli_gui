@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+package mnm;
+
+
+service RemoteTasksService {
+  rpc FetchRemoteTasks(RemoteEmpty) returns (RemoteTasksResponse);
+  rpc FetchRemoteTaskById(FetchTaskByIdRequest) returns (RemoteTask);
+}
+
+
+message RemoteEmpty {}
+
+
+message RemoteTask {
+  int32 userId = 1;
+  int32 id = 2;
+  string title = 3;
+  bool completed = 4;
+}
+
+message RemoteTasksResponse {
+  repeated RemoteTask tasks = 1;
+}
+
+message FetchTaskByIdRequest {
+  int32 id = 1;
+}

@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+service TodoService {
+  rpc AddTask (AddTaskRequest) returns (TaskResponse);
+  rpc ListTasks (Empty) returns (TaskListResponse);
+  rpc ToggleTask (ToggleTaskRequest) returns (TaskResponse);
+  rpc DeleteTask (DeleteTaskRequest) returns (Empty);
+}
+
+message Empty {}
+
+message AddTaskRequest {
+  string title = 1;
+}
+
+message ToggleTaskRequest {
+  int32 id = 1;
+  bool completed = 2;
+}
+
+message DeleteTaskRequest {
+  int32 id = 1;
+}
+
+message TaskResponse {
+  int32 id = 1;
+  string title = 2;
+  bool completed = 3;
+}
+
+message TaskListResponse {
+  repeated TaskResponse tasks = 1;
+}

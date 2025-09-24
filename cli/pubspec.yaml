@@ -1,0 +1,9 @@
+name: mnm
+description: CLI client for Todo Cli
+environment:
+  sdk: ">=3.0.0 <4.0.0"
+
+dependencies:
+  grpc: ^4.2.0
+  protobuf: ^4.2.0
+  args: ^2.7.0
