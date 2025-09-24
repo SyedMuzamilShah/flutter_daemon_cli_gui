@@ -1,8 +1,8 @@
 
-# mnm: Multi-Platform Todo App
+# manm: Multi-Platform Todo App
 
 
-`mnm` is a full-stack, multi-platform Todo application built with Flutter, gRPC, Dart, and Node.js. It features:
+`manm` is a full-stack, multi-platform Todo application built with Flutter, gRPC, Dart, and Node.js. It features:
 
 - **Flutter GUI**: Modern, reactive todo app for desktop/mobile/web
 - **gRPC Daemon**: Backend server for local and remote task management
