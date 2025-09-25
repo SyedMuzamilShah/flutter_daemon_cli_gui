@@ -27,7 +27,9 @@ class RemoteTodoServiceImpl extends RemoteTasksServiceBase {
   Future<RemoteTasksResponse> fetchRemoteTasks(
       ServiceCall call, RemoteEmpty request) async {
     try {
+      print("Trying to fetch tasks from external API...");
       final response = await api.fetchTodos();
+      print(response);
       final tasks = response.map((data) {
         return RemoteTask(
           userId: data['userId'],

@@ -12,18 +12,22 @@ class TodoSignals {
     tasks.value = list;
   }
 
-  Future<void> addTask(String title) async {
-    await db.addTask(title);
+  Future<Task> addTask(String title) async {
+    final id = await db.addTask(title);
     await loadTasks();
+    return tasks.value.firstWhere((t) => t.id == id);
   }
 
-  Future<void> toggleTask(int id, bool completed) async {
+  Future<Task> toggleTask(int id, bool completed) async {
     await db.updateTask(id, completed);
     await loadTasks();
+    return tasks.value.firstWhere((t) => t.id == id);
   }
 
-  Future<void> deleteTask(int id) async {
+  Future<Task?> deleteTask(int id) async {
+    final deletedTask = tasks.value.firstWhere((t) => t.id == id);
     await db.deleteTask(id);
     await loadTasks();
+    return deletedTask;
   }
 }

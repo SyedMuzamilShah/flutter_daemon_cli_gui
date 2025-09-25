@@ -1,34 +1,43 @@
-import 'package:mnm/generated/todo.pb.dart';
-import 'package:mnm/services/local_task_client.dart';
-// import 'package:signals/signals.dart';
+import 'package:mnm/data/repo/todo_repo.dart';
+import 'package:mnm/model/local_todo_model.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
 class LocalTaskSignals {
-  final LocalTaskClient client;
-  // Reactive list of tasks
-  final tasks = Signal<List<TaskResponse>>([]);
+  LocalTaskClientRepo client;
+  final tasks = Signal<List<TodoModel>>([]);
 
   LocalTaskSignals(this.client);
 
   Future<void> loadTasks() async {
-    final response = await client.client.listTasks(Empty());
-    tasks.value = response.tasks;
+    try {
+      final response = await client.listTasks();
+      print(response);
+      tasks.value = response;
+      return;
+    } catch (e) {
+      print("Error loading tasks: $e");
+    }
   }
 
   Future<void> addTask(String title) async {
-    final response = await client.client.addTask(AddTaskRequest(title: title));
-    tasks.value = [...tasks.value, response]; // reactive update
+    print("Testing in side signals");
+    final task = await client.addTask(title);
+    print("Added task: $task");
+    tasks.value = [...tasks.value, task];
   }
 
   Future<void> toggleTask(int id, bool completed) async {
     final response =
-        await client.client.toggleTask(ToggleTaskRequest(id: id, completed: completed));
-    final updated = tasks.value.map((t) => t.id == id ? response : t).toList();
+    await client.toggleTask(id, completed);
+    print(response);
+    final updated = tasks.value.map((t) => t.id == id.toString() ? TodoModel(t.id, t.title, !t.completed) : t).toList();
     tasks.value = updated;
   }
 
   Future<void> deleteTask(int id) async {
-    await client.client.deleteTask(DeleteTaskRequest(id: id));
-    tasks.value = tasks.value.where((t) => t.id != id).toList();
+    // await client.client.deleteTask(DeleteTaskRequest(id: id));
+    await client.deleteTask(id);
+    // final updated = tasks.value.where((t) => t.id != id).toList();
+    tasks.value = tasks.value.where((t) => t.id != id.toString()).toList();
   }
 }

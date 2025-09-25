@@ -14,8 +14,9 @@ class JsonPlaceHolderApiImpl implements ExternalApi {
 
   @override
   Future<List<Map<String, dynamic>>> fetchTodos() async {
+    print("Calling external API at $baseUrl/todos");
     final response = await http.get(Uri.parse('$baseUrl/todos'));
-    print("Testing");
+    print(response.body);
     if (response.statusCode == 200) {
       final List<dynamic> data = jsonDecode(response.body);
       return data.cast<Map<String, dynamic>>();

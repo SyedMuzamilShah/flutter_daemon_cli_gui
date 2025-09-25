@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mnm/state/local_task_signal.dart';
 import 'package:mnm/state/remote_task_signal.dart';
 import 'package:mnm/pages/home_screen.dart';
-import 'package:mnm/services/local_task_client.dart';
-import 'package:mnm/services/remote_task_client.dart';
+import 'package:mnm/usecase/todo_factory.dart';
 
 void main() {
   runApp(const TodoApp());
@@ -14,10 +13,8 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    // Client Connector Instances to connect to daemon gRPC services
-    final localClient = LocalTaskClient();
-    final remoteClient = RemoteTaskClient();
+    final localClient = createCoreClientInstance();
+    final remoteClient = createRemoteClientInstance();
 
     // State management instances
     final localSignals = LocalTaskSignals(localClient);

@@ -1,28 +1,27 @@
-import 'package:mnm/generated/remote_todo.pbgrpc.dart';
-// import 'package:signals/signals.dart';
+import 'package:mnm/data/repo/remote_repo.dart';
+import 'package:mnm/model/remote_todo_model.dart';
 import 'package:signals_flutter/signals_flutter.dart';
 
-import '../services/remote_task_client.dart';
-
 class RemoteTaskSignals {
-  final RemoteTaskClient client;
+  final RemoteClientRepo client;
 
-  
-  final tasks = Signal<List<RemoteTask>>([]);
+  final tasks = Signal<List<RemoteTodoModel>>([]);
 
   RemoteTaskSignals(this.client);
 
   Future<void> loadTasks() async {
-    final response = await client.client.fetchRemoteTasks(RemoteEmpty());
-    tasks.value = response.tasks;
+    print("Testing in RemoteTaskSignals loadTasks");
+    // final response = await client.client.fetchRemoteTasks(RemoteEmpty());
+    final response = await client.fetchRemoteTasks();
+    tasks.value = response;
   }
 
-  Future<RemoteTask?> fetchTaskById(int id) async {
+  Future<void> fetchTaskById(int id) async {
     try {
-      final task = await client.client.fetchRemoteTaskById(FetchTaskByIdRequest(id: id));
-      return task;
+      final task = await client.fetchRemoteTaskById(id.toString());
+      tasks.value = [task];
     } catch (e) {
-      return null;
+      print("Error fetching task by id: $e");
     }
   }
 }

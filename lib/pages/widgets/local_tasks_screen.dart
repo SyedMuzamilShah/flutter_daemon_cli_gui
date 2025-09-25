@@ -25,8 +25,8 @@ class LocalTasksScreen extends StatelessWidget {
           return TaskTile(
             title: task.title,
             completed: task.completed,
-            onToggle: () => signals.toggleTask(task.id, !task.completed),
-            onDelete: () => signals.deleteTask(task.id),
+            onToggle: () => signals.toggleTask(int.parse(task.id), !task.completed),
+            onDelete: () => signals.deleteTask(int.parse(task.id)),
           );
         },
       );

@@ -11,6 +11,7 @@ class RemoteListGetCommand extends Command {
   @override
   Future<void> run() async {
     final cli = RemoteTodoCli();
+    print("Testing remote-list command...");
     try {
       final response = await cli.client.fetchRemoteTasks(RemoteEmpty());
       if (response.tasks.isEmpty) {

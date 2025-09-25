@@ -1,0 +1,89 @@
+name: CI/CD
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies (root)
+        run: flutter pub get
+      - name: Install dependencies (daemon)
+        run: |
+          cd daemon
+          dart pub get
+      - name: Install dependencies (cli)
+        run: |
+          cd cli
+          dart pub get
+      - name: Run Dart/Flutter tests
+        run: flutter test
+
+  build-mobile:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build APK
+        run: flutter build apk --release
+      - name: Build iOS (simulator only)
+        run: flutter build ios --simulator
+
+  build-desktop:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build Linux
+        run: flutter build linux
+      - name: Build Windows
+        run: flutter build windows
+      - name: Build macOS
+        run: flutter build macos
+
+  build-web:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: flutter pub get
+      - name: Build Web
+        run: flutter build web
+
+  nodejs:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Install Node.js dependencies
+        run: |
+          cd nodejs
+          npm install
+      - name: Run Node.js tests (if any)
+        run: |
+          cd nodejs
+          npm test || echo "No tests defined"
