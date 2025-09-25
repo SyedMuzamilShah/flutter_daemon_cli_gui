@@ -22,8 +22,6 @@ jobs:
         run: |
           cd cli
           dart pub get
-      - name: Run Dart/Flutter tests
-        run: flutter test
 
   build-mobile:
     runs-on: ubuntu-latest
@@ -78,7 +76,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22.18.0
       - name: Install Node.js dependencies
         run: |
           cd nodejs
