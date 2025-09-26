@@ -1,6 +1,6 @@
 import 'package:args/command_runner.dart';
 import 'package:mnm/cli_app.dart';
-import 'package:mnm/generated/todo.pbgrpc.dart';
+import 'package:mnm/core/generated/todo.pbgrpc.dart';
 
 class AddCommand extends Command {
   @override

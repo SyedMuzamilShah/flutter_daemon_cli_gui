@@ -1,5 +1,5 @@
 import 'package:args/command_runner.dart';
-import 'package:mnm/generated/remote_todo.pb.dart';
+import 'package:mnm/core/generated/remote_todo.pb.dart';
 import 'package:mnm/remote_cli_app.dart';
 
 class OwnServerStreamCommand extends Command {

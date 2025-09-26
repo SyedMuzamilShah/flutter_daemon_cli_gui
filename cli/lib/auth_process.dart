@@ -1,21 +1,20 @@
 import 'package:grpc/grpc.dart';
-import 'package:mnm/generated/remote_todo.pbgrpc.dart';
+import 'package:mnm/core/generated/sso_google.pbgrpc.dart';
 
-class OwnServer {
+class GoogleSSOClient {
   final ClientChannel channel;
-  late final RemoteTasksServiceClient client;
+  late final GoogleSSOServiceClient client;
 
-  OwnServer()
+  GoogleSSOClient()
       : channel = ClientChannel(
           'localhost',
-          port: 50052,
+          port: 50051,
           options: const ChannelOptions(
             credentials: ChannelCredentials.insecure(),
           ),
         ) {
-    client = RemoteTasksServiceClient(channel);
+    client = GoogleSSOServiceClient(channel);
   }
 
-  
   Future<void> shutdown() async => await channel.shutdown();
 }

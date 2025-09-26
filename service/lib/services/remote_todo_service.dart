@@ -1,7 +1,7 @@
 import 'package:grpc/grpc.dart';
 import 'package:mnm/external/jsonplaceholder_api.dart';
 import 'package:mnm/external/own_server.dart';
-import 'package:mnm/generated/remote_todo.pbgrpc.dart';
+import 'package:mnm/core/generated/remote_todo.pbgrpc.dart';
 
 class RemoteTodoServiceImpl extends RemoteTasksServiceBase {
   final ExternalApi api;

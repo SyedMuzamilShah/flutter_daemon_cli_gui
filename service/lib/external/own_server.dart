@@ -1,15 +1,14 @@
 import 'package:grpc/grpc.dart';
 import 'package:mnm/core/generated/remote_todo.pbgrpc.dart';
 
-class RemoteTodoCli {
-  final int port;
+class OwnServer {
   final ClientChannel channel;
   late final RemoteTasksServiceClient client;
 
-  RemoteTodoCli({this.port = 50051})
+  OwnServer()
       : channel = ClientChannel(
           'localhost',
-          port: port, // use the port passed in
+          port: 50052,
           options: const ChannelOptions(
             credentials: ChannelCredentials.insecure(),
           ),
@@ -17,5 +16,6 @@ class RemoteTodoCli {
     client = RemoteTasksServiceClient(channel);
   }
 
+  
   Future<void> shutdown() async => await channel.shutdown();
 }

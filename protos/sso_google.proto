@@ -1,0 +1,33 @@
+syntax = "proto3";
+
+package sso_google;
+
+service GoogleSSOService {
+  rpc SignInWithGoogle(AuthEmpty) returns (SignInWithGoogleResponse);
+  rpc IsLoggedIn(AuthEmpty) returns (IsLoggedInResponse);
+  rpc GetToken(AuthEmpty) returns (GetTokenResponse);
+  rpc SignOut(AuthEmpty) returns (SignOutResponse);
+}
+
+message AuthEmpty {}
+
+message SignInWithGoogleResponse {
+  string token = 1;
+  string message = 2;
+}
+
+message IsLoggedInResponse {
+  bool is_logged_in = 1;
+  string message = 2;
+}
+
+message GetTokenResponse {
+  string access_token = 1;
+  string refresh_token = 2;
+  int64 expires_in = 3;
+}
+
+message SignOutResponse {
+  bool success = 1;
+  string message = 2;
+}

@@ -1,5 +1,5 @@
 import 'package:grpc/grpc.dart';
-import 'package:mnm/generated/todo.pbgrpc.dart';
+import 'package:mnm/core/generated/todo.pbgrpc.dart';
 
 class TodoCli {
   final ClientChannel channel;

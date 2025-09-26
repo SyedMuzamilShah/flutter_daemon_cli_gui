@@ -1,6 +1,6 @@
 import 'package:grpc/grpc.dart';
 import '../state/todo_signals.dart';
-import '../generated/todo.pbgrpc.dart';
+import '../core/generated/todo.pbgrpc.dart';
 
 class TodoServiceImpl extends TodoServiceBase {
   final TodoSignals signals;

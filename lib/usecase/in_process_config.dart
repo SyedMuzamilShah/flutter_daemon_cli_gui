@@ -1,3 +1,4 @@
+import 'package:mnm/data/repo/auth_repo.dart';
 import 'package:mnm/data/repo/remote_repo.dart';
 import 'package:mnm/data/repo/todo_repo.dart';
 
@@ -7,3 +8,5 @@ import 'web_case.dart'
 LocalTaskClientRepo createCoreClientInstance() => impl.createCoreClient();
 
 RemoteClientRepo createRemoteClientInstance() => impl.createRemoteClient();
+
+AuthRepo createAuthClientInstance() => impl.createAuthClient();

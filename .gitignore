@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/release
 
 nodejs/node_modules/
+service/lib/core/appconfig/auth.json

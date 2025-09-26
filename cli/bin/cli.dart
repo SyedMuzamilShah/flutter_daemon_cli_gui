@@ -1,6 +1,7 @@
 import 'package:args/command_runner.dart';
 import 'package:mnm/commands/list_command.dart';
 import 'package:mnm/commands/add_command.dart';
+import 'package:mnm/commands/login_command.dart';
 import 'package:mnm/commands/own_server_stream_command.dart';
 import 'package:mnm/commands/remote_fetch_by_id_command.dart';
 import 'package:mnm/commands/remote_list_get_command.dart';
@@ -15,7 +16,8 @@ void main(List<String> args) async {
     ..addCommand(DeleteCommand())
     ..addCommand(RemoteListGetCommand())
     ..addCommand(RemoteFetchByIdCommand())
-    ..addCommand(OwnServerStreamCommand());
+    ..addCommand(OwnServerStreamCommand())
+    ..addCommand(LoginCommand());
 
   try {
     await runner.run(args);

@@ -1,4 +1,5 @@
 import 'package:grpc/grpc.dart';
+import 'package:mnm/data/repo/auth_repo.dart';
 import 'package:mnm/data/repo/remote_repo.dart';
 import 'package:mnm/data/repo/todo_repo.dart';
 import 'package:mnm/data/repo_impl/remote_repo_impl_grpc.dart';
@@ -25,4 +26,9 @@ RemoteClientRepo createRemoteClient() {
   );
   final stub = pb_remote.RemoteTasksServiceClient(channel);
   return RemoteTodoGrpcImpl(channel, stub);
+}
+
+
+AuthRepo createAuthClient() {
+  throw UnimplementedError('AuthRepo creation not implemented yet.');
 }
