@@ -1,11 +1,11 @@
 import 'package:grpc/grpc.dart';
 import 'package:mnm/core/generated/remote_todo.pbgrpc.dart';
 
-class OwnServer {
+class RemoteGrpcServer {
   final ClientChannel channel;
   late final RemoteTasksServiceClient client;
 
-  OwnServer()
+  RemoteGrpcServer()
       : channel = ClientChannel(
           'localhost',
           port: 50052,

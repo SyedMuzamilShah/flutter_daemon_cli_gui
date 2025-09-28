@@ -9,4 +9,4 @@ LocalTaskClientRepo createCoreClient () => LocalTodoRepoImpl();
 
 RemoteClientRepo createRemoteClient() => RemoteRepoImpl();
 
-AuthRepo createAuthClient() => AuthRepoImpl();
+AuthClientRepo createAuthClient() => AuthRepoImpl();

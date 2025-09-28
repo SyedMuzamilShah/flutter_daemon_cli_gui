@@ -1,5 +1,5 @@
 import 'package:signals/signals.dart';
-import '../db/drift_database.dart';
+import '../utils/db/drift_database.dart';
 
 class TodoSignals {
   final AppDatabase db;

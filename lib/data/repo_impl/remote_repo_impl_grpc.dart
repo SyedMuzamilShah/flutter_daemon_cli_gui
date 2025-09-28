@@ -5,15 +5,16 @@ import 'package:mnm/model/remote_todo_model.dart';
 
 class RemoteTodoGrpcImpl extends RemoteClientRepo {
   final ClientChannel channel;
-  final pb.RemoteTasksServiceClient client;
+  final pb.RemoteTasksServiceClient _stub;
 
-  RemoteTodoGrpcImpl(this.channel, this.client);
+  RemoteTodoGrpcImpl(this.channel)
+    : _stub = pb.RemoteTasksServiceClient(channel);
 
   @override
   Future<List<RemoteTodoModel>> fetchRemoteTasks() async {
     print("Testing gRPC fetchRemoteTasks");
     try {
-      final response = await client.fetchRemoteTasks(pb.RemoteEmpty());
+      final response = await _stub.fetchRemoteTasks(pb.RemoteEmpty());
       return response.tasks
           .map(
             (e) => RemoteTodoModel(
@@ -33,7 +34,7 @@ class RemoteTodoGrpcImpl extends RemoteClientRepo {
   @override
   Future<RemoteTodoModel> fetchRemoteTaskById(String id) async {
     try {
-      final task = await client.fetchRemoteTaskById(
+      final task = await _stub.fetchRemoteTaskById(
         pb.FetchTaskByIdRequest(id: int.parse(id)),
       );
       return RemoteTodoModel(

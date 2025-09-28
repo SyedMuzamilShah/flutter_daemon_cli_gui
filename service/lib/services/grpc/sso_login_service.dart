@@ -1,20 +1,20 @@
 import 'package:grpc/grpc.dart';
 import 'package:mnm/core/generated/sso_google.pbgrpc.dart';
-import 'package:mnm/external/google_sso.dart';
+import 'package:mnm/state/google_sso_signals.dart';
 
 class GoogleServices extends GoogleSSOServiceBase {
-  GoogleSSO googleSSO;
-  GoogleServices(this.googleSSO);
+  GoogleSsoSignals signals = GoogleSsoSignals();
+  GoogleServices();
   @override
   Future<GetTokenResponse> getToken(ServiceCall call, AuthEmpty request) async {
     try {
-      final response = await googleSSO.getToken();
-      print(response);
+      final token = await signals.getToken();
+      print(token);
       return GetTokenResponse()
-        ..accessToken = "AccessTokenPlaceholder"
+        ..accessToken = token
         ..refreshToken = "RefreshTokenPlaceholder";
     } catch (e) {
-      throw GrpcError.unauthenticated('User not authenticated');
+      throw GrpcError.unauthenticated(e.toString());
     }
   }
 
@@ -22,7 +22,8 @@ class GoogleServices extends GoogleSSOServiceBase {
   Future<SignInWithGoogleResponse> signInWithGoogle(
       ServiceCall call, AuthEmpty request) async {
     try {
-      final response = await googleSSO.signInWithGoogle();
+      
+      final response = await signals.signInWithGoogle();
       return SignInWithGoogleResponse()
       ..message = "SignIn successful"
       ..token = response;
@@ -35,7 +36,7 @@ class GoogleServices extends GoogleSSOServiceBase {
   @override
   Future<SignOutResponse> signOut(ServiceCall call, AuthEmpty request) async {
     try {
-      await googleSSO.signOut();
+      await signals.signOut();
       return SignOutResponse()..message = "SignOut successful";
     } catch (e) {
       throw GrpcError.unauthenticated('User not authenticated');
@@ -45,7 +46,7 @@ class GoogleServices extends GoogleSSOServiceBase {
   @override
   Future<IsLoggedInResponse> isLoggedIn(ServiceCall call, AuthEmpty request) async {
     try {
-      final response = await googleSSO.isLoggedIn();
+      final response = await signals.isLoggedIn();
       return IsLoggedInResponse()
         ..isLoggedIn = response
         ..message = response ? "User is logged in" : "User is not logged in";

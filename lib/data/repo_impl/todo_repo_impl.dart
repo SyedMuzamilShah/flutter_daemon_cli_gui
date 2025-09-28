@@ -16,7 +16,8 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
         headers: {'Content-Type': 'application/json'},
         body: jsonEncode({'title': title}),
       );
-      if (response.statusCode == 200) {
+      print("Add Task Response: ${response.body}");
+      if (response.statusCode == 201) {
         final task = jsonDecode(response.body);
         TodoModel newTask = TodoModel(
           task['id'].toString(),
@@ -27,8 +28,8 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
       } else {
         throw Exception('Failed to add task');
       }
-    } catch (e, stack) {
-      print('Error adding task: $e\n$stack');
+    } catch (e, _) {
+      print('Error adding task: $e\n');
       rethrow;
     }
   }
@@ -37,7 +38,9 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
   Future<void> deleteTask(int id) async {
     try {
       final response = await http.delete(Uri.parse('$baseUrl/tasks/$id'));
-      if (response.statusCode != 200) {
+      print("Delete Task Response: ${response.body}");
+
+      if (response.statusCode != 204) {
         throw Exception('Failed to delete task');
       }
     } catch (e, stack) {
@@ -50,6 +53,8 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
   Future<List<TodoModel>> listTasks() async {
     try {
       final response = await http.get(Uri.parse('$baseUrl/tasks'));
+      print("List Tasks Response: ${response.body}");
+
       if (response.statusCode == 200) {
         final List<dynamic> tasksJson = jsonDecode(response.body);
         return tasksJson.map((task) {
@@ -77,6 +82,8 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
         body: jsonEncode({'completed': completed}),
       );
 
+      print("Toggle Task Response: ${response.body}");
+
       if (response.statusCode == 200) {
         final task = jsonDecode(response.body);
         return TodoModel(
@@ -93,7 +100,7 @@ class LocalTodoRepoImpl implements LocalTaskClientRepo {
       throw Exception('Failed to toggle task');
     }
   }
-  
+
   @override
   Future<void> dispose() async {}
 }

@@ -6,7 +6,7 @@ import 'package:mnm/model/local_todo_model.dart';
 class LocalTodoGrpcImp implements LocalTaskClientRepo {
   final ClientChannel channel;
   final pb.TodoServiceClient _stub;
-  LocalTodoGrpcImp(this.channel,this._stub);
+  LocalTodoGrpcImp(this.channel) : _stub = pb.TodoServiceClient(channel);
 
   @override
   Future<TodoModel> addTask(String title) async {
@@ -39,8 +39,8 @@ class LocalTodoGrpcImp implements LocalTaskClientRepo {
   TodoModel _fromPb(pb.TaskResponse t) =>
       TodoModel(t.id.toString(), t.title, t.completed);
       
-        @override
-        Future<void> dispose() async{
-          await channel.shutdown();
-        }
+  @override
+  Future<void> dispose() async{
+    await channel.shutdown();
+  }
 }

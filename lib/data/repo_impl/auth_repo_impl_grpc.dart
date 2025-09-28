@@ -2,7 +2,7 @@ import 'package:grpc/service_api.dart';
 import 'package:mnm/data/repo/auth_repo.dart';
 import 'package:mnm/core/generated/sso_google.pbgrpc.dart' as pb;
 
-class AuthRepoImplGRPC implements AuthRepo {
+class AuthRepoImplGRPC implements AuthClientRepo {
   final ClientChannel channel;
   final pb.GoogleSSOServiceClient client;
 
@@ -13,8 +13,8 @@ class AuthRepoImplGRPC implements AuthRepo {
     try {
       final response = await client.signInWithGoogle(pb.AuthEmpty());
       return response.token;
-    } catch (e, stack) {
-      print('Error signing in with Google: $e\n$stack');
+    } catch (e, _) {
+      print('Error signing in with Google: $e');
       rethrow;
     }
   }
@@ -25,6 +25,17 @@ class AuthRepoImplGRPC implements AuthRepo {
       await client.signOut(pb.AuthEmpty());
     } catch (e, stack) {
       print('Error signing out: $e\n$stack');
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<bool> isLoggedIn() async {
+    try {
+      final response = await client.isLoggedIn(pb.AuthEmpty());
+      return response.isLoggedIn;
+    } catch (e, _) {
+      print('Error checking login status: $e');
       rethrow;
     }
   }
